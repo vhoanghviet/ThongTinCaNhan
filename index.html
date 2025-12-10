@@ -3,417 +3,275 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile | Sinh viên 25CTT6</title>
+    <title>Profile | Đoàn Hoàng Việt - Wibu Coder</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- 1. CẤU HÌNH MÀU SẮC & BIẾN --- */
+        /* --- CẤU HÌNH GIAO DIỆN XANH - TRẮNG --- */
         :root {
-            --primary-blue: #0056b3; /* Xanh đậm trường học */
-            --light-blue: #e3f2fd;   /* Xanh nhạt nền */
-            --accent-blue: #00bcd4;  /* Xanh điểm nhấn */
-            --text-dark: #333333;
-            --text-light: #ffffff;
-            --bg-white: #ffffff;
-            --gray-bg: #f8f9fa;
+            --primary: #004e92;      /* Xanh chủ đạo */
+            --dark-blue: #000428;    /* Xanh đen (như Akatsuki) */
+            --accent: #00b4db;       /* Xanh sáng (như Rasengan) */
+            --gojo-purple: #6a1b9a;  /* Màu tím hư thức của Gojo */
+            --bg-light: #f0f4f8;
+            --text-main: #333;
+            --white: #fff;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', 'Noto Sans JP', sans-serif;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--bg-white);
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
-
-        /* --- 2. HEADER & NAVIGATION --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', 'Noto Sans JP', sans-serif; }
+        body { background-color: var(--bg-light); color: var(--text-main); line-height: 1.6; }
+        
+        /* --- HEADER --- */
         header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: rgba(255, 255, 255, 0.98);
             padding: 15px 5%;
+            position: fixed; top: 0; width: 100%;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1); z-index: 1000;
+            border-bottom: 3px solid var(--primary);
         }
+        .logo { font-size: 1.8rem; font-weight: 900; color: var(--primary); text-decoration: none; text-transform: uppercase; letter-spacing: 1px; }
+        .logo span { color: var(--dark-blue); }
+        nav ul { list-style: none; display: flex; gap: 30px; }
+        nav a { text-decoration: none; color: var(--text-main); font-weight: 600; transition: 0.3s; position: relative; }
+        nav a:hover { color: var(--primary); }
+        nav a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background: var(--accent); transition: 0.3s; }
+        nav a:hover::after { width: 100%; }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-
-        .logo span {
-            color: var(--text-dark);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav ul li {
-            margin-left: 30px;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        nav ul li a:hover {
-            color: var(--primary-blue);
-        }
-
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--primary-blue);
-            transition: width 0.3s;
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
-        }
-
-        /* --- 3. HERO SECTION (PHẦN GIỚI THIỆU) --- */
+        /* --- HERO SECTION --- */
         .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--light-blue) 0%, #ffffff 100%);
-            padding: 0 10%;
-            position: relative;
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #fff 0%, #e3f2fd 100%);
+            padding: 100px 10% 50px;
+            position: relative; overflow: hidden;
+        }
+        /* Hiệu ứng nền Wibu ẩn */
+        .hero::before {
+            content: '領域展開'; /* Lãnh địa triển khai */
+            position: absolute; top: 10%; right: 5%;
+            font-size: 10rem; color: rgba(0, 78, 146, 0.05);
+            font-weight: 900; z-index: 0; writing-mode: vertical-rl;
         }
 
-        .hero-content {
-            flex: 1;
-            padding-right: 50px;
-        }
-
-        .hero-content h3 {
-            font-size: 1.5rem;
-            color: var(--primary-blue);
-            margin-bottom: 10px;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            line-height: 1.2;
-            margin-bottom: 20px;
-        }
-
-        .hero-content h1 span {
-            color: var(--primary-blue);
-        }
-
-        .typewriter {
-            font-size: 1.2rem;
-            color: #555;
-            margin-bottom: 30px;
-            font-weight: 500;
+        .hero-text { flex: 1; padding-right: 50px; z-index: 1; }
+        .hero-text h3 { color: var(--accent); font-size: 1.5rem; margin-bottom: 5px; font-weight: 700; }
+        .hero-text h1 { font-size: 4rem; color: var(--primary); line-height: 1.1; margin-bottom: 20px; font-weight: 900; }
+        .hero-text p { font-size: 1.2rem; color: #555; margin-bottom: 30px; }
+        .wibu-quote {
+            font-style: italic; border-left: 4px solid var(--gojo-purple); 
+            padding-left: 15px; background: #fff; padding: 10px 15px; border-radius: 0 10px 10px 0;
+            margin-bottom: 30px; display: inline-block; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--primary-blue);
-            color: var(--text-light);
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: 700;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 2px solid var(--primary-blue);
+            padding: 12px 35px; border-radius: 5px; text-decoration: none; font-weight: bold;
+            display: inline-block; transition: 0.3s; border: 2px solid var(--primary); text-transform: uppercase;
         }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 86, 179, 0.3);
-            background-color: transparent;
-            color: var(--primary-blue);
-        }
-
-        .hero-img {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            position: relative;
-        }
-
-        .img-container {
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 10px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 0 30px rgba(0, 86, 179, 0.2);
-            position: relative;
-            z-index: 1;
-            background-color: #fff; /* Nền trắng phòng khi ảnh lỗi */
-        }
-
-        .img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .circle-decor {
-            position: absolute;
-            width: 420px;
-            height: 420px;
-            border-radius: 50%;
-            border: 2px dashed var(--primary-blue);
-            animation: spin 20s linear infinite;
-            z-index: 0;
-        }
-
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
-        }
-
-        /* --- 4. ABOUT SECTION --- */
-        .section {
-            padding: 80px 10%;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 60px;
-            color: var(--primary-blue);
-        }
-
-        .about-container {
-            display: flex;
-            gap: 40px;
-            background: var(--gray-bg);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .about-text {
-            flex: 1;
-        }
+        .btn-primary { background: var(--primary); color: var(--white); box-shadow: 0 5px 15px rgba(0, 78, 146, 0.3); }
+        .btn-primary:hover { background: var(--dark-blue); border-color: var(--dark-blue); transform: translateY(-3px); }
         
-        .about-text p {
-            margin-bottom: 15px;
-            font-size: 1.1rem;
+        .hero-img { 
+            width: 400px; height: 400px; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; 
+            overflow: hidden; border: 5px solid var(--white);
+            box-shadow: 0 20px 50px rgba(0, 78, 146, 0.3);
+            animation: morph 8s ease-in-out infinite; z-index: 1; background: #fff;
+        }
+        .hero-img img { width: 100%; height: 100%; object-fit: cover; }
+        
+        @keyframes morph {
+            0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            50% { border-radius: 30% 30% 70% 70% / 50% 30% 70% 50%; }
+            100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
         }
 
-        .jp-quote {
-            font-style: italic;
-            color: #666;
-            border-left: 4px solid var(--primary-blue);
-            padding-left: 15px;
-            margin: 20px 0;
-            background: #fff;
-            padding: 15px;
+        /* --- SECTION CHUNG --- */
+        section { padding: 80px 10%; position: relative; }
+        .section-title { text-align: center; margin-bottom: 60px; }
+        .section-title h2 { font-size: 2.8rem; color: var(--primary); font-weight: 900; text-transform: uppercase; }
+        .section-title span { display: block; font-size: 1rem; color: var(--accent); letter-spacing: 3px; font-family: 'Noto Sans JP', sans-serif; }
+
+        /* --- HOBBIES (WIBU CORNER) --- */
+        .wibu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .anime-card {
+            background: var(--white); border-radius: 15px; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: 0.4s; position: relative;
+            border-bottom: 5px solid var(--primary);
+        }
+        .anime-card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        
+        .anime-img { height: 200px; width: 100%; overflow: hidden; position: relative; }
+        .anime-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .anime-card:hover .anime-img img { transform: scale(1.1); }
+        
+        .anime-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: #fff; padding: 10px; opacity: 0; transition: 0.3s;
+        }
+        .anime-card:hover .anime-overlay { opacity: 1; }
+
+        .anime-content { padding: 20px; text-align: center; }
+        .anime-content h3 { color: var(--dark-blue); margin-bottom: 10px; font-size: 1.4rem; }
+        .anime-content p { font-size: 0.95rem; color: #555; font-style: italic; }
+        .anime-quote { 
+            margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ddd; 
+            font-weight: bold; color: var(--primary); font-family: 'Noto Sans JP', sans-serif;
         }
 
-        /* --- 5. SKILLS SECTION --- */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
+        /* --- PROJECTS --- */
+        .project-list { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .proj-item { background: #fff; padding: 30px; border-radius: 10px; border-left: 5px solid var(--accent); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .proj-item h3 { color: var(--primary); margin-bottom: 10px; }
 
-        .skill-card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid #eee;
-            transition: transform 0.3s;
+        /* --- FOOTER --- */
+        footer { background: var(--dark-blue); color: var(--white); text-align: center; padding: 40px; position: relative; overflow: hidden; }
+        footer::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--gojo-purple));
         }
+        .socials a { color: var(--white); font-size: 1.8rem; margin: 0 20px; transition: 0.3s; }
+        .socials a:hover { color: var(--accent); transform: rotate(360deg); }
 
-        .skill-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-blue);
-        }
-
-        .skill-icon {
-            font-size: 3rem;
-            color: var(--primary-blue);
-            margin-bottom: 20px;
-        }
-
-        .level-bar {
-            width: 100%;
-            height: 8px;
-            background: #eee;
-            border-radius: 4px;
-            margin-top: 15px;
-            overflow: hidden;
-        }
-
-        .level-fill {
-            height: 100%;
-            background: var(--primary-blue);
-            border-radius: 4px;
-        }
-
-        /* --- 6. FOOTER --- */
-        footer {
-            background-color: var(--primary-blue);
-            color: white;
-            text-align: center;
-            padding: 30px;
-            margin-top: 50px;
-        }
-
-        .social-links a {
-            color: white;
-            font-size: 1.5rem;
-            margin: 0 15px;
-            transition: color 0.3s;
-        }
-
-        .social-links a:hover {
-            color: var(--accent-blue);
-        }
-
-        /* --- MEDIA QUERY --- */
+        /* MOBILE */
         @media (max-width: 768px) {
-            .hero {
-                flex-direction: column-reverse;
-                text-align: center;
-                height: auto;
-                padding-top: 100px;
-                padding-bottom: 50px;
-            }
-            .hero-content { padding-right: 0; margin-top: 30px; }
-            .hero-content h1 { font-size: 2.5rem; }
-            .img-container { width: 250px; height: 250px; margin: 0 auto; }
-            .circle-decor { width: 270px; height: 270px; left: 50%; transform: translateX(-50%); }
+            .hero { flex-direction: column-reverse; text-align: center; padding-top: 100px; }
+            .hero-text { padding-right: 0; margin-top: 30px; }
+            .hero-img { width: 280px; height: 280px; }
             nav { display: none; }
-            .about-container { flex-direction: column; }
+            .hero::before { font-size: 5rem; top: 5%; }
+            .project-list { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="#" class="logo">25CTT6<span>.Dev</span></a>
+        <a href="#" class="logo">Hoàng Việt<span>.Wibu</span></a>
         <nav>
             <ul>
                 <li><a href="#home">Trang chủ</a></li>
-                <li><a href="#about">Giới thiệu</a></li>
-                <li><a href="#skills">Kỹ năng</a></li>
+                <li><a href="#anime">Góc Wibu</a></li>
+                <li><a href="#projects">Dự án</a></li>
                 <li><a href="#contact">Liên hệ</a></li>
             </ul>
         </nav>
     </header>
 
     <section id="home" class="hero">
-        <div class="hero-content">
-            <h3>Xin chào, mình là</h3>
-            <h1>Nguyễn Văn A <br><span>Sinh viên IT</span></h1>
-            <div class="typewriter">
-                Lớp 25CTT6 & Đam mê tiếng Nhật
+        <div class="hero-text">
+            <h3>Konnichiwa! Mình là</h3>
+            <h1>Đoàn Hoàng Việt</h1>
+            <p>Sinh viên <strong>25CTT6</strong> | Fullstack Developer tương lai</p>
+            
+            <div class="wibu-quote">
+                "Tôi không chạy trốn. Tôi chỉ đang lùi về sau để lấy đà Code mạnh hơn thôi!" <br>
+                <small>- Phong cách Naruto -</small>
             </div>
-            <a href="#contact" class="btn">Liên hệ với mình</a>
-            <a href="https://github.com/" target="_blank" class="btn" style="background:transparent; color:var(--primary-blue); margin-left:10px;">Github</a>
+            
+            <div>
+                <a href="#contact" class="btn btn-primary">Thuê tôi ngay</a>
+                <a href="#anime" class="btn" style="margin-left: 10px; color: var(--primary);">Xem Waifu/Husbandu</a>
+            </div>
         </div>
-
         <div class="hero-img">
-            <div class="circle-decor"></div>
-            <div class="img-container">
-                <img src="images/avatar.jpg" 
-                     alt="Avatar của tôi" 
-                     onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name=IT+Student&background=0056b3&color=fff&size=400&font-size=0.4'">
-            </div>
+            <img src="images/avatar.jpg" alt="Đoàn Hoàng Việt" 
+                 onerror="this.src='https://ui-avatars.com/api/?name=Viet+Doan&background=004e92&color=fff&size=400'">
         </div>
     </section>
 
-    <section id="about" class="section">
-        <h2 class="section-title">Về Bản Thân</h2>
-        <div class="about-container">
-            <div class="about-text">
-                <p>Chào mọi người! Mình là một sinh viên năm nhất tại khoa Công nghệ thông tin, lớp <strong>25CTT6</strong>.</p>
-                <p>Mình có niềm đam mê lớn với lập trình web và khoa học dữ liệu. Ngoài ra, mình đang dành thời gian mỗi ngày để chinh phục tiếng Nhật với mục tiêu trở thành một Kỹ sư cầu nối (BrSE) trong tương lai.</p>
-                <div class="jp-quote">
-                    <strong>Motto:</strong> "継続は力なり" (Keizoku wa chikara nari)<br>
-                    <small>Dịch: Kiên trì chính là sức mạnh.</small>
+    <section id="anime" style="background: #fff;">
+        <div class="section-title">
+            <span>MY INSPIRATION</span>
+            <h2>Góc Đam Mê & Cảm Hứng</h2>
+        </div>
+
+        <div class="wibu-grid">
+            <div class="anime-card" style="border-bottom-color: var(--gojo-purple);">
+                <div class="anime-img">
+                    <img src="images/gojo.jpg" alt="Gojo Satoru" onerror="this.src='https://wallpapers.com/images/hd/gojo-satoru-4k-cool-art-b2d9z8p0q9z8p0q9.jpg'">
+                    <div class="anime-overlay">Jujutsu Kaisen</div>
+                </div>
+                <div class="anime-content">
+                    <h3>Gojo Satoru</h3>
+                    <p>Bậc thầy IT: Xử lý mọi bug bằng "Vô Hạ Hạn".</p>
+                    <div class="anime-quote">"Daijoubu. Datte kimi, yowai mo."</div>
                 </div>
             </div>
-            <div class="about-info">
-                <ul style="list-style: none;">
-                    <li style="margin-bottom: 10px;"><i class="fas fa-university" style="color: var(--primary-blue); width: 30px;"></i> Lớp: 25CTT6</li>
-                    <li style="margin-bottom: 10px;"><i class="fas fa-map-marker-alt" style="color: var(--primary-blue); width: 30px;"></i> Hồ Chí Minh, Việt Nam</li>
-                    <li style="margin-bottom: 10px;"><i class="fas fa-envelope" style="color: var(--primary-blue); width: 30px;"></i> email.student@gmail.com</li>
-                    <li style="margin-bottom: 10px;"><i class="fas fa-language" style="color: var(--primary-blue); width: 30px;"></i> Tiếng Việt, English, 日本語</li>
-                </ul>
+
+            <div class="anime-card" style="border-bottom-color: #f1c40f;">
+                <div class="anime-img">
+                    <img src="images/jojo.jpg" alt="Dio vs Jotaro" onerror="this.src='https://images7.alphacoders.com/697/thumb-1920-697964.jpg'">
+                    <div class="anime-overlay">JoJo's Bizarre Adventure</div>
+                </div>
+                <div class="anime-content">
+                    <h3>Dio & Jotaro</h3>
+                    <p>Code chạy quá nhanh? Dùng "Za Warudo" để debug!</p>
+                    <div class="anime-quote">"Oh? You're approaching me?"</div>
+                </div>
+            </div>
+
+            <div class="anime-card" style="border-bottom-color: #e67e22;">
+                <div class="anime-img">
+                    <img src="images/naruto.jpg" alt="Naruto" onerror="this.src='https://images.alphacoders.com/605/605592.png'">
+                    <div class="anime-overlay">Naruto Shippuden</div>
+                </div>
+                <div class="anime-content">
+                    <h3>Naruto Uzumaki</h3>
+                    <p>Nhẫn đạo: "Tôi không bao giờ nuốt lời, code là phải chạy!"</p>
+                    <div class="anime-quote">"Dattebayo!"</div>
+                </div>
+            </div>
+
+            <div class="anime-card" style="border-bottom-color: #c0392b;">
+                <div class="anime-img">
+                    <img src="images/itachi.jpg" alt="Itachi" onerror="this.src='https://images2.alphacoders.com/564/564835.jpg'">
+                    <div class="anime-overlay">Akatsuki Member</div>
+                </div>
+                <div class="anime-content">
+                    <h3>Itachi Uchiha</h3>
+                    <p>Coder thầm lặng. Hy sinh giấc ngủ để bảo vệ server.</p>
+                    <div class="anime-quote">"Forgive me, Sasuke. Next time."</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="skills" class="section">
-        <h2 class="section-title">Sở Trường & Ngôn Ngữ</h2>
-        <div class="skills-grid">
-            <div class="skill-card">
-                <i class="fab fa-html5 skill-icon"></i>
-                <h3>HTML5/CSS3</h3>
-                <p>Xây dựng giao diện web cơ bản</p>
-                <div class="level-bar"><div class="level-fill" style="width: 80%"></div></div>
+    <section id="projects">
+        <div class="section-title">
+            <span>MY WORK</span>
+            <h2>Dự Án Đã Làm</h2>
+        </div>
+        <div class="project-list">
+            <div class="proj-item">
+                <h3><i class="fas fa-code"></i> Portfolio Wibu Edition</h3>
+                <p>Website cá nhân tích hợp sở thích Anime, sử dụng HTML5/CSS3 thuần. Giao diện Responsive hiện đại.</p>
             </div>
-            <div class="skill-card">
-                <i class="fas fa-code skill-icon"></i>
-                <h3>C++ / Python</h3>
-                <p>Tư duy thuật toán & Nhập môn</p>
-                <div class="level-bar"><div class="level-fill" style="width: 60%"></div></div>
+            <div class="proj-item">
+                <h3><i class="fas fa-database"></i> Quản lý Điểm Sinh Viên</h3>
+                <p>Ứng dụng C++ Console quản lý danh sách sinh viên, tính điểm trung bình, xếp loại học lực.</p>
             </div>
-            <div class="skill-card">
-                <i class="fas fa-torii-gate skill-icon"></i>
-                <h3>Tiếng Nhật (N5/N4)</h3>
-                <p>Giao tiếp cơ bản & Đọc hiểu</p>
-                <div class="level-bar"><div class="level-fill" style="width: 40%"></div></div>
+             <div class="proj-item">
+                <h3><i class="fas fa-language"></i> Học Tiếng Nhật N5</h3>
+                <p>Đang trên hành trình chinh phục N5 để có thể xem Anime không cần Vietsub và làm BrSE.</p>
             </div>
         </div>
     </section>
 
     <footer id="contact">
-        <h3>Kết nối với mình</h3>
-        <p>Đừng ngần ngại liên hệ để trao đổi về Code hoặc học tiếng Nhật nhé!</p>
-        <div class="social-links" style="margin-top: 20px;">
+        <h2>Kết nối với Đoàn Hoàng Việt</h2>
+        <p style="margin: 20px 0;">dhoangviet3005@gmail.com</p>
+        <div class="socials">
             <a href="#"><i class="fab fa-facebook"></i></a>
             <a href="#"><i class="fab fa-github"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-discord"></i></a>
         </div>
-        <p style="margin-top: 30px; font-size: 0.8rem;">© 2025 Made by Student 25CTT6. All rights reserved.</p>
+        <p style="margin-top: 30px; font-size: 0.8rem; opacity: 0.8;">
+            © 2025 Konoha Village | 25CTT6 Clan
+        </p>
     </footer>
 
-    <script>
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
 </body>
 </html>
