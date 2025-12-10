@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoàng Việt | The Wibu Coder 25CTT6</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- CẤU HÌNH MÀU SẮC (THEME ANIME) --- */
+        :root {
+            --primary: #0056b3;      /* Xanh chủ đạo trường em */
+            --dark: #111;            /* Đen ngầu */
+            --white: #fff;
+            --gojo: #a29bfe;         /* Tím Gojo */
+            --dio: #f1c40f;          /* Vàng Dio */
+            --naruto: #e67e22;       /* Cam Naruto */
+            --itachi: #e74c3c;       /* Đỏ Itachi */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background-color: #f4f4f9; color: #333; overflow-x: hidden; }
+
+        /* --- HEADER --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 5%;
+            position: fixed; top: 0; width: 100%;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); z-index: 1000;
+        }
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--primary); text-decoration: none; text-transform: uppercase; }
+        .logo span { color: var(--dark); }
+        nav ul { display: flex; list-style: none; gap: 30px; }
+        nav a { text-decoration: none; color: #333; font-weight: 700; transition: 0.3s; }
+        nav a:hover { color: var(--primary); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #fff 0%, #dbeafe 100%);
+            padding: 120px 10% 50px;
+            text-align: center;
+            flex-direction: column;
+        }
+        
+        .hero-avatar {
+            width: 350px; height: 350px;
+            border-radius: 50%;
+            border: 8px solid var(--white);
+            box-shadow: 0 20px 50px rgba(0, 86, 179, 0.3);
+            overflow: hidden;
+            margin-bottom: 30px;
+            animation: float 5s ease-in-out infinite;
+        }
+        .hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        .hero h1 { font-size: 4rem; margin-bottom: 10px; color: var(--primary); font-weight: 900; letter-spacing: -1px; }
+        .hero h3 { font-size: 1.5rem; color: #555; margin-bottom: 20px; font-weight: 400; }
+        .hero h3 span { color: var(--itachi); font-weight: bold; }
+        
+        .contact-btn {
+            padding: 15px 40px; background: var(--primary); color: white;
+            text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 1.2rem;
+            transition: 0.3s; box-shadow: 0 10px 20px rgba(0, 86, 179, 0.3);
+            display: inline-block;
+        }
+        .contact-btn:hover { transform: translateY(-3px); background: var(--dark); }
+
+        /* --- REVIEWS SECTION --- */
+        .reviews { padding: 80px 10%; background: white; }
+        .section-title { text-align: center; font-size: 2.5rem; color: var(--dark); margin-bottom: 60px; font-weight: 900; text-transform: uppercase; }
+        .section-title span { color: var(--primary); }
+
+        .card {
+            display: flex;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            margin-bottom: 50px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            border-left: 10px solid #ddd;
+        }
+        .card:hover { transform: translateY(-10px); }
+
+        .card-img { width: 300px; min-width: 300px; position: relative; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .card-content { padding: 40px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .char-name { font-size: 2.2rem; font-weight: 900; margin-bottom: 5px; font-family: 'Noto Sans JP', sans-serif; }
+        .char-role { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7; margin-bottom: 20px; font-weight: bold; }
+        
+        .quote {
+            font-size: 1.1rem; font-style: italic; line-height: 1.8; color: #444;
+            background: #f8f9fa; padding: 25px; border-radius: 15px; position: relative;
+        }
+        .quote::before { content: '“'; font-size: 5rem; position: absolute; top: -10px; left: 10px; opacity: 0.1; font-family: serif; }
+
+        /* Character Themes */
+        .theme-gojo { border-left-color: var(--gojo); }
+        .theme-gojo .char-name { color: var(--gojo); }
+        
+        .theme-dio { border-left-color: var(--dio); }
+        .theme-dio .char-name { color: #d4ac0d; }
+        
+        .theme-naruto { border-left-color: var(--naruto); }
+        .theme-naruto .char-name { color: var(--naruto); }
+        
+        .theme-itachi { border-left-color: var(--itachi); }
+        .theme-itachi .char-name { color: var(--itachi); }
+
+        /* --- FOOTER --- */
+        footer { background: var(--dark); color: white; text-align: center; padding: 50px 20px; }
+        .socials { margin-top: 20px; }
+        .socials a { color: white; font-size: 1.8rem; margin: 0 15px; transition: 0.3s; }
+        .socials a:hover { color: var(--primary); transform: scale(1.2); }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .card { flex-direction: column; }
+            .card-img { width: 100%; height: 300px; }
+            .hero-avatar { width: 250px; height: 250px; }
+            .hero h1 { font-size: 2.5rem; }
+            nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">Hoàng Việt <span>25CTT6</span></a>
+        <nav>
+            <ul>
+                <li><a href="#">Trang chủ</a></li>
+                <li><a href="#reviews">Huyền Thoại Nói Gì?</a></li>
+                <li><a href="#contact">Liên hệ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-avatar">
+            <img src="images/avatar.jpg" alt="Đoàn Hoàng Việt" 
+                 onerror="this.src='https://ui-avatars.com/api/?name=Viet+Doan&background=0056b3&color=fff&size=500&font-size=0.33'">
+        </div>
+        <h1>Đoàn Hoàng Việt</h1>
+        <h3>Sinh viên 25CTT6 | <span id="typing">Bậc Thầy Code Web</span></h3>
+        <p style="margin-bottom: 30px; font-size: 1.1rem; max-width: 600px;">
+            Chàng trai với ước mơ chinh phục Tokyo, sở hữu tư duy thuật toán sắc bén hơn cả Sharingan và tốc độ gõ phím nhanh hơn Minato.
+        </p>
+        <a href="#reviews" class="contact-btn">Xem Đánh Giá Bá Đạo</a>
+    </section>
+
+    <section id="reviews" class="reviews">
+        <div class="section-title"><span>Hall of Fame</span><br>Đại Sảnh Danh Vọng</div>
+
+        <div class="card theme-gojo">
+            <div class="card-img">
+                <img src="images/gojo.jpg" onerror="this.src='https://wallpapers.com/images/hd/gojo-satoru-hollow-purple-technique-f07k8j6y9x6y9x6y.jpg'">
+            </div>
+            <div class="card-content">
+                <div class="char-name">Gojo Satoru</div>
+                <div class="char-role">Chú Thuật Sư Mạnh Nhất - Jujutsu Kaisen</div>
+                <div class="quote">
+                    "Yowai mo (Yếu quá nhỉ)... đó là điều tôi nói với mọi người, TRỪ <strong>Đoàn Hoàng Việt</strong>.<br><br>
+                    Thật sự đấy, Lục Nhãn của tôi có thể nhìn thấu mọi chú thuật, nhưng tôi không thể nhìn thấu giới hạn tài năng code của cậu nhóc này. Cấu trúc dữ liệu cậu ấy xây dựng còn hoàn hảo hơn cả 'Vô Lượng Không Xứ'. Không có bug nào có thể tồn tại khi Việt chạm tay vào bàn phím. Nếu có ai đó đủ sức thay thế tôi đứng trên đỉnh cao, chỉ có thể là Việt!"
+                </div>
+            </div>
+        </div>
+
+        <div class="card theme-dio">
+            <div class="card-img">
+                <img src="images/jojo.jpg" onerror="this.src='https://static.jojowiki.com/images/thumb/4/4d/latest/20200813180230/Dio_PB_Infobox_Anime.png/270px-Dio_PB_Infobox_Anime.png'">
+            </div>
+            <div class="card-content">
+                <div class="char-name">DIO</div>
+                <div class="char-role">The World User - JoJo's Bizarre Adventure</div>
+                <div class="quote">
+                    "KONO DIO DA!! Ta đã sống qua hàng thế kỷ, nhưng <strong>Đoàn Hoàng Việt</strong> là một ngoại lệ!<br><br>
+                    WRYYYYYY! Tốc độ deploy website của hắn còn nhanh hơn cả khi ta ngưng đọng thời gian bằng The World! Hắn thao túng C++ như thể đó là huyết mạch của hắn vậy. Ta, DIO, công nhận rằng hắn đứng trên đỉnh cao của mọi Lập trình viên! Hắn code không chỉ đúng, mà còn đầy phong cách (JOJO POSE)!"
+                </div>
+            </div>
+        </div>
+
+        <div class="card theme-naruto">
+            <div class="card-img">
+                <img src="images/naruto.jpg" onerror="this.src='https://cdn.wallpapersafari.com/34/96/H7T40J.jpg'">
+            </div>
+            <div class="card-content">
+                <div class="char-name">Uzumaki Naruto</div>
+                <div class="char-role">Hokage Đệ Thất - Làng Lá</div>
+                <div class="quote">
+                    "Dattebayo! Tớ chưa từng thấy ai có 'Nhẫn Đạo' code kiên cường như <strong>Việt</strong>!<br><br>
+                    Cậu ấy fix bug không bao giờ bỏ cuộc, giống hệt tớ vậy! Tư duy logic của cậu ấy dồi dào như Chakra vĩ thú. Mỗi dòng code cậu ấy viết ra đều chứa đựng ý chí của lửa. Tớ tin chắc rằng Việt sẽ trở thành một 'Hokage' vĩ đại trong thế giới lập trình, bảo vệ server khỏi mọi cuộc tấn công của Hacker!"
+                </div>
+            </div>
+        </div>
+
+        <div class="card theme-itachi">
+            <div class="card-img">
+                <img src="images/itachi.jpg" onerror="this.src='https://wallpapers.com/images/high/itachi-uchiha-red-moon-q5q5q5q5q5q5q5q5.jpg'">
+            </div>
+            <div class="card-content">
+                <div class="char-name">Uchiha Itachi</div>
+                <div class="char-role">Thiên Tài Gia Tộc Uchiha</div>
+                <div class="quote">
+                    "Dù có dùng Mangekyou Sharingan, ta cũng không thể tìm ra lỗ hổng bảo mật nào trong website của <strong>Việt</strong>.<br><br>
+                    Em ấy sở hữu một trí tuệ vượt xa tuổi tác. Sự sắp xếp code, cách tối ưu thuật toán... tất cả đều là nghệ thuật. Việt không cần dùng ảo thuật để mê hoặc người dùng, chính giao diện tuyệt đẹp mà em ấy tạo ra đã là một loại ảo thuật vĩnh cửu rồi. Một thiên tài hiếm có."
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <h2>Kết nối với Đoàn Hoàng Việt</h2>
+        <p style="margin: 15px 0; opacity: 0.8;">dhoangviet3005@gmail.com</p>
+        <div class="socials">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+        <p style="margin-top: 30px; font-size: 0.8rem; opacity: 0.5;">© 2025 Made by Viet 25CTT6</p>
+    </footer>
+
+</body>
+</html>
