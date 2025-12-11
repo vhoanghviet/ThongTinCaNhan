@@ -10,7 +10,7 @@
 
     <style>
         :root {
-            --primary: #0056b3;
+            --primary: #00a8ff; 
             --dark: #111;
             --white: #fff;
             --gojo: #a29bfe;
@@ -18,66 +18,161 @@
             --naruto: #e67e22;
             --itachi: #e74c3c;
             --leaf-green: #2ecc71;
-            --chakra-blue: #3498db;
+            --glass: rgba(255, 255, 255, 0.85); 
+        }
+
+        html, body {
+            cursor: url('https://cur.cursors-4u.net/games/gam-13/gam1282.cur'), auto; 
+        }
+        a:hover, button:hover {
+            cursor: url('https://cur.cursors-4u.net/games/gam-13/gam1289.cur'), pointer; 
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; scroll-behavior: smooth; }
-        body { background-color: #f4f4f9; color: #333; overflow-x: hidden; }
+        
+        body { 
+            color: #333; 
+            overflow-x: hidden; 
+            background-color: #000;
+        }
+
+        /* --- VIDEO BACKGROUND --- */
+        #bg-video {
+            position: fixed;
+            right: 0; bottom: 0;
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
+            z-index: -2;
+            object-fit: cover;
+            opacity: 0.7; /* Tăng độ rõ của video lên chút vì AMV đẹp */
+            filter: blur(1px); /* Blur cực nhẹ để làm nền */
+            transition: 0.5s;
+        }
+        /* Khi bật nhạc (unmute), video sẽ rõ nét hơn */
+        body.music-on #bg-video {
+            opacity: 1;
+            filter: blur(0);
+        }
+
+        /* Lớp phủ tối */
+        .video-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); 
+            z-index: -1;
+            background-image: radial-gradient(rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 100%);
+            pointer-events: none;
+        }
+
+        /* --- SAKURA EFFECT --- */
+        .sakura {
+            position: fixed; top: -10vh;
+            background-color: #ffc0cb;
+            border-radius: 100% 0 100% 0;
+            animation: fall linear infinite;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        @keyframes fall {
+            0% { top: -10%; transform: translateX(0) rotate(0deg); opacity: 0.8; }
+            100% { top: 110%; transform: translateX(100px) rotate(360deg); opacity: 0; }
+        }
 
         /* --- HEADER --- */
         header {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
             padding: 15px 5%;
             position: fixed; top: 0; width: 100%;
             display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1000;
+            border-bottom: 3px solid var(--primary);
         }
-        .logo { font-size: 1.5rem; font-weight: 900; color: var(--primary); text-decoration: none; text-transform: uppercase; }
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--primary); text-decoration: none; text-transform: uppercase; text-shadow: 2px 2px 0px #000; letter-spacing: 2px;}
         .logo span { color: var(--dark); }
         nav ul { display: flex; list-style: none; gap: 30px; }
-        nav a { text-decoration: none; color: #333; font-weight: 700; transition: 0.3s; }
+        nav a { text-decoration: none; color: #333; font-weight: 700; transition: 0.3s; position: relative; }
         nav a:hover { color: var(--primary); }
+        nav a::after {
+            content: ''; position: absolute; width: 0; height: 3px;
+            bottom: -5px; left: 0; background: var(--itachi); transition: 0.3s;
+        }
+        nav a:hover::after { width: 100%; }
 
         /* --- HERO SECTION --- */
         .hero {
             min-height: 100vh;
             display: flex; align-items: center; justify-content: center;
-            background: linear-gradient(135deg, #fff 0%, #dbeafe 100%);
+            background: transparent; 
             padding: 140px 10% 60px;
             text-align: center;
             flex-direction: column;
+            position: relative;
+            color: white; 
         }
         
+        .manga-lines {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-conic-gradient(from 0deg, rgba(255,255,255,0.1) 0deg 2deg, transparent 2deg 10deg);
+            z-index: -1;
+            opacity: 0.5;
+            mask-image: radial-gradient(circle, transparent 30%, black 100%);
+        }
+
         .hero-avatar {
-            width: 350px; height: 350px;
+            width: 300px; height: 300px;
             border-radius: 50%;
-            border: 8px solid var(--white);
-            box-shadow: 0 20px 50px rgba(0, 86, 179, 0.3);
+            border: 5px solid var(--white);
+            box-shadow: 0 0 30px var(--primary), 0 0 60px var(--primary); 
             overflow: hidden;
             margin-bottom: 30px;
             animation: float 5s ease-in-out infinite;
         }
-        .hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-avatar img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .hero-avatar:hover img { transform: scale(1.1) rotate(5deg); }
         
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        .hero h1 { font-size: 4.5rem; margin-bottom: 10px; color: var(--primary); font-weight: 900; letter-spacing: -1px; }
-        .hero h3 { font-size: 1.6rem; color: #555; margin-bottom: 25px; font-weight: 400; }
-        .hero h3 span { color: var(--itachi); font-weight: bold; }
-        .hero p { margin-bottom: 40px; font-size: 1.15rem; max-width: 800px; line-height: 1.8; color: #444; }
+        .hero h1 { 
+            font-size: 4.5rem; margin-bottom: 10px; color: var(--white); 
+            font-weight: 900; letter-spacing: -1px;
+            text-shadow: 3px 3px 0 var(--primary), 6px 6px 0 var(--dark); 
+        }
+        .hero h3 { font-size: 1.6rem; color: #ddd; margin-bottom: 25px; font-weight: 400; background: rgba(0,0,0,0.6); padding: 5px 15px; border-radius: 5px;}
+        .hero h3 span { color: var(--itachi); font-weight: bold; text-shadow: 0 0 10px var(--itachi); }
+        
+        .hero p { 
+            margin-bottom: 40px; font-size: 1.15rem; max-width: 800px; line-height: 1.8; color: #eee; 
+            background: rgba(0,0,0,0.5); padding: 20px; border-radius: 10px; border-left: 5px solid var(--primary);
+        }
         
         .contact-btn {
-            padding: 15px 45px; background: var(--primary); color: white;
-            text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 1.2rem;
-            transition: 0.3s; box-shadow: 0 10px 20px rgba(0, 86, 179, 0.3);
-            display: inline-block;
+            padding: 15px 50px; background: var(--itachi); color: white;
+            text-decoration: none; border-radius: 0px; 
+            font-weight: 900; font-size: 1.4rem; text-transform: uppercase;
+            transition: 0.2s; box-shadow: 5px 5px 0px var(--white);
+            display: inline-block; clip-path: polygon(10% 0, 100% 0, 100% 80%, 90% 100%, 0 100%, 0 20%);
+            letter-spacing: 2px;
         }
-        .contact-btn:hover { transform: translateY(-3px); background: var(--dark); }
+        .contact-btn:hover { 
+            transform: translate(-3px, -3px); 
+            box-shadow: 8px 8px 0px var(--primary); 
+            background: var(--dark);
+        }
 
-        /* --- NEW SECTION: NINJA INFO (Sở thích/Điểm mạnh) --- */
-        .ninja-info { padding: 80px 10%; background: #fff; }
+        /* --- SECTIONS --- */
+        section:not(.hero) {
+            background: var(--glass);
+            margin: 50px 5%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .ninja-info { padding: 80px 5%; }
         .section-title { text-align: center; font-size: 2.8rem; color: var(--dark); margin-bottom: 60px; font-weight: 900; text-transform: uppercase; }
-        .section-title span { color: var(--primary); display: block; font-size: 1.2rem; letter-spacing: 3px; margin-bottom: 10px; }
+        .section-title span { color: var(--primary); display: block; font-size: 1.2rem; letter-spacing: 5px; margin-bottom: 10px; }
 
         .info-grid {
             display: grid;
@@ -86,86 +181,124 @@
         }
 
         .info-card {
-            background: #f8f9fa; border-radius: 20px; padding: 30px;
-            transition: 0.3s; border-top: 5px solid var(--primary);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            background: white; border-radius: 10px; padding: 30px;
+            transition: 0.3s; border: 2px solid #eee;
+            position: relative;
         }
-        .info-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        .info-card h4 { font-size: 1.5rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .info-card:hover { transform: translateY(-10px) scale(1.02); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,86,179,0.2); }
+        .info-card h4 { font-size: 1.5rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-family: 'Noto Sans JP', sans-serif; font-weight: 900; }
         .info-card ul { list-style: none; }
         .info-card li { margin-bottom: 12px; position: relative; padding-left: 25px; line-height: 1.6; }
-        .info-card li::before { content: '✦'; color: var(--primary); position: absolute; left: 0; font-weight: bold; }
+        .info-card li::before { content: '⚡'; color: var(--primary); position: absolute; left: 0; }
 
-        /* Card themes */
-        .card-hobby { border-color: var(--naruto); } .card-hobby h4 { color: var(--naruto); }
-        .card-strength { border-color: var(--leaf-green); } .card-strength h4 { color: var(--leaf-green); }
-        .card-weakness { border-color: var(--itachi); } .card-weakness h4 { color: var(--itachi); }
-        .card-dream { border-color: var(--dio); } .card-dream h4 { color: #d4ac0d; }
+        .card-hobby h4 { color: var(--naruto); } 
+        .card-strength h4 { color: var(--leaf-green); } 
+        .card-weakness h4 { color: var(--itachi); } 
+        .card-dream h4 { color: #d4ac0d; }
 
-        /* --- NEW SECTION: SCHEDULE (Lịch trình) --- */
-        .schedule-section { padding: 80px 5%; background: #f0f2f5; }
-        .schedule-container { overflow-x: auto; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 20px; }
+        /* --- SCHEDULE --- */
+        .schedule-section { padding: 80px 5%; }
+        .schedule-container { overflow-x: auto; background: white; border-radius: 10px; padding: 20px; border: 3px solid var(--dark); }
         
         table { width: 100%; border-collapse: collapse; min-width: 800px; }
-        th, td { padding: 15px; text-align: center; border-bottom: 1px solid #eee; }
-        th { background: var(--primary); color: white; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; }
-        td { font-size: 0.95rem; vertical-align: middle; }
+        th, td { padding: 15px; text-align: center; border-bottom: 1px solid #ddd; }
+        th { background: var(--dark); color: white; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; }
         
-        .tag { padding: 5px 10px; border-radius: 5px; font-weight: bold; font-size: 0.85rem; display: inline-block; margin: 2px; }
-        .tag-school { background: #ffeaa7; color: #d35400; border: 1px solid #ffd32a; }
-        .tag-gym { background: #ffcccc; color: #c0392b; border: 1px solid #e74c3c; }
-        .tag-code { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
-        .tag-chill { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .tag { padding: 5px 10px; border-radius: 3px; font-weight: bold; font-size: 0.85rem; display: inline-block; margin: 2px; box-shadow: 2px 2px 0px rgba(0,0,0,0.1); }
+        .tag-school { background: #ffeaa7; color: #d35400; border: 1px solid #d35400; }
+        .tag-gym { background: #ff7675; color: #fff; border: 1px solid #c0392b; }
+        .tag-code { background: #74b9ff; color: #fff; border: 1px solid #0984e3; }
+        .tag-chill { background: #55efc4; color: #00b894; border: 1px solid #00b894; }
 
-        /* --- REVIEWS SECTION --- */
-        .reviews { padding: 80px 10%; background: white; }
-
+        /* --- REVIEWS --- */
+        .reviews { padding: 80px 10%; }
         .card {
-            display: flex; background: #fff; border-radius: 20px;
+            display: flex; background: #fff; border-radius: 15px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.1); margin-bottom: 60px;
-            overflow: hidden; transition: transform 0.3s; border-left: 10px solid #ddd;
+            overflow: hidden; transition: transform 0.3s; 
+            border: 3px solid var(--dark);
         }
-        .card:hover { transform: translateY(-10px); }
-        .card-img { width: 320px; min-width: 320px; position: relative; }
-        .card-img img { width: 100%; height: 100%; object-fit: cover; }
+        .card:hover { transform: translateX(10px) translateY(-5px); box-shadow: -10px 10px 0px var(--dark); }
+        .card-img { width: 320px; min-width: 320px; position: relative; overflow: hidden;}
+        .card-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s;}
+        .card:hover .card-img img { transform: scale(1.1); filter: contrast(1.2); }
         .card-content { padding: 40px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-        .char-name { font-size: 2.4rem; font-weight: 900; margin-bottom: 5px; font-family: 'Noto Sans JP', sans-serif; }
-        .char-role { font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7; margin-bottom: 25px; font-weight: bold; }
+        .char-name { font-size: 2.4rem; font-weight: 900; margin-bottom: 5px; font-family: 'Noto Sans JP', sans-serif; text-transform: uppercase; font-style: italic;}
         
         .quote {
-            font-size: 1.15rem; font-style: italic; line-height: 1.9; color: #444;
-            background: #f8f9fa; padding: 30px; border-radius: 15px; position: relative;
+            font-size: 1.15rem; font-style: italic; line-height: 1.9; color: #000;
+            background: #fff; padding: 30px; border-radius: 0; position: relative;
+            border: 2px solid #000;
+            background-image: radial-gradient(#000 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-color: #f0f0f0;
         }
-        .quote::before { content: '“'; font-size: 6rem; position: absolute; top: -20px; left: 15px; opacity: 0.1; font-family: serif; }
-        .quote strong { color: var(--dark); font-weight: 900; }
+        .quote::before { content: '❝'; font-size: 4rem; position: absolute; top: -10px; left: 10px; opacity: 1; color: var(--dark); }
 
-        /* Character Themes */
-        .theme-gojo { border-left-color: var(--gojo); } .theme-gojo .char-name { color: var(--gojo); }
-        .theme-dio { border-left-color: var(--dio); } .theme-dio .char-name { color: #d4ac0d; }
-        .theme-naruto { border-left-color: var(--naruto); } .theme-naruto .char-name { color: var(--naruto); }
-        .theme-itachi { border-left-color: var(--itachi); } .theme-itachi .char-name { color: var(--itachi); }
+        .theme-gojo .char-name { color: var(--gojo); text-shadow: 2px 2px 0 #000; }
+        .theme-dio .char-name { color: #d4ac0d; text-shadow: 2px 2px 0 #000; }
+        .theme-naruto .char-name { color: var(--naruto); text-shadow: 2px 2px 0 #000; }
+        .theme-itachi .char-name { color: var(--itachi); text-shadow: 2px 2px 0 #000; }
 
-        /* --- FOOTER --- */
-        footer { background: var(--dark); color: white; text-align: center; padding: 60px 20px; }
-        .socials { margin-top: 25px; }
-        .socials a { color: white; font-size: 2rem; margin: 0 20px; transition: 0.3s; }
-        .socials a:hover { color: var(--primary); transform: scale(1.2) rotate(360deg); }
+        /* --- WIDGETS --- */
+        .mascot-widget {
+            position: fixed; bottom: 0; right: 20px; width: 150px; z-index: 999;
+            transition: 0.3s; cursor: pointer;
+        }
+        .mascot-widget:hover { transform: translateY(-20px); }
+        .mascot-bubble {
+            position: absolute; top: -60px; right: 20px;
+            background: white; padding: 10px 15px; border-radius: 20px;
+            border: 2px solid black; font-size: 0.8rem; font-weight: bold;
+            display: none; white-space: nowrap; box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+        }
+        .mascot-widget:hover .mascot-bubble { display: block; animation: popIn 0.3s ease; }
 
-        /* Mobile Responsive */
+        /* MUSIC PLAYER */
+        .music-player {
+            position: fixed; bottom: 20px; left: 20px;
+            background: var(--dark); color: white; padding: 10px 20px;
+            border-radius: 50px; border: 2px solid var(--primary);
+            display: flex; align-items: center; gap: 10px;
+            z-index: 1000; cursor: pointer;
+            box-shadow: 0 0 15px var(--primary);
+            transition: 0.3s;
+        }
+        .music-player:hover { width: auto; background: var(--primary); transform: scale(1.05); }
+        .music-disc { animation: spin 2s linear infinite; animation-play-state: paused; }
+        .playing .music-disc { animation-play-state: running; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0); } 100% { opacity: 1; transform: scale(1); } }
+
+        /* Mobile */
         @media (max-width: 768px) {
             .hero { padding-top: 120px; }
-            .hero h1 { font-size: 3rem; }
-            .hero p { font-size: 1rem; }
+            .hero h1 { font-size: 2.5rem; }
             .card { flex-direction: column; }
             .card-img { width: 100%; height: 350px; }
-            .hero-avatar { width: 260px; height: 260px; }
+            .hero-avatar { width: 220px; height: 220px; }
             nav { display: none; }
-            .quote { font-size: 1rem; padding: 20px; }
-            table { min-width: 600px; font-size: 0.8rem; }
+            .mascot-widget { width: 100px; }
         }
     </style>
 </head>
 <body>
+
+    <video autoplay muted loop id="bg-video">
+        <source src="bg-anime.mp4" type="video/mp4">
+        Trình duyệt của bạn không hỗ trợ video nền.
+    </video>
+    <div class="video-overlay"></div>
+
+    <div class="music-player" id="musicToggle">
+        <i class="fas fa-volume-mute music-disc" id="musicIcon"></i>
+        <span id="musicText">Bật Nhạc Nền (Unmute)</span>
+    </div>
+
+    <div class="mascot-widget">
+        <div class="mascot-bubble">Ganbatte, Việt-kun! ❤️</div>
+        <img src="https://media.tenor.com/fTTVgygZD84AAAAi/chibi-anime.gif" alt="Mascot" style="width:100%;">
+    </div>
 
     <header>
         <a href="#" class="logo">Hoàng Việt <span>25CTT6</span></a>
@@ -180,6 +313,7 @@
     </header>
 
     <section class="hero">
+        <div class="manga-lines"></div>
         <div class="hero-avatar">
             <img src="images/avatar.jpg" 
                  onerror="this.src='images/avatar.png'; this.onerror=function(){this.src='https://ui-avatars.com/api/?name=Viet+Doan&background=0056b3&color=fff&size=500&font-size=0.33&bold=true'}"
@@ -243,7 +377,6 @@
 
     <section id="schedule" class="schedule-section">
         <div class="section-title"><span>Weekly Mission</span>Lịch Trình Tu Luyện</div>
-        
         <div class="schedule-container">
             <table>
                 <thead>
@@ -260,90 +393,34 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="font-weight:bold; color:var(--primary);">Sáng<br><span style="font-size:0.8em; font-weight:normal">(7:00 - 12:00)</span></td>
-                        <td>
-                            <span class="tag tag-chill">Ngủ nướng / Tự học</span>
-                        </td>
-                        <td>
-                            <span class="tag tag-school">Thể Dục (7:30)</span><br>
-                            <span class="tag tag-school">Workshop (8:00)</span>
-                        </td>
-                        <td>
-                            <span class="tag tag-school">Vi Tích Phân 1</span><br>(9:45-11:50)
-                        </td>
-                        <td>
-                            <span class="tag tag-school">Nhập môn CNTT</span><br>(7:30-11:00)
-                        </td>
-                        <td>
-                            <span class="tag tag-school">CS Lập Trình</span><br>(7:30-8:45)<br>
-                            <span class="tag tag-school">NM CNTT</span>
-                        </td>
-                        <td>
-                            <span class="tag tag-school">CS Lập Trình</span><br>(7:30-11:00)
-                        </td>
-                        <td>
-                            <span class="tag tag-gym">Gym (Sáng sớm)</span><br>
-                            <span class="tag tag-code">Vibe Coding</span>
-                        </td>
+                        <td style="font-weight:bold; color:var(--dark);">Sáng<br><span style="font-size:0.8em; font-weight:normal">(7:00 - 12:00)</span></td>
+                        <td><span class="tag tag-chill">Ngủ nướng / Tự học</span></td>
+                        <td><span class="tag tag-school">Thể Dục (7:30)</span><br><span class="tag tag-school">Workshop (8:00)</span></td>
+                        <td><span class="tag tag-school">Vi Tích Phân 1</span><br>(9:45-11:50)</td>
+                        <td><span class="tag tag-school">Nhập môn CNTT</span><br>(7:30-11:00)</td>
+                        <td><span class="tag tag-school">CS Lập Trình</span><br>(7:30-8:45)<br><span class="tag tag-school">NM CNTT</span></td>
+                        <td><span class="tag tag-school">CS Lập Trình</span><br>(7:30-11:00)</td>
+                        <td><span class="tag tag-gym">Gym (Sáng sớm)</span><br><span class="tag tag-code">Vibe Coding</span></td>
                     </tr>
                     <tr>
-                        <td style="font-weight:bold; color:var(--primary);">Chiều<br><span style="font-size:0.8em; font-weight:normal">(12:30 - 17:30)</span></td>
-                        <td>
-                            <span class="tag tag-code">Ra Quán Code (4h)</span><br>
-                            <span class="tag tag-gym">Gym (16:30)</span>
-                        </td>
-                        <td>
-                            <span class="tag tag-school">Toán Rời Rạc</span><br>(12:40-16:10)
-                        </td>
-                        <td>
-                            <span class="tag tag-school">Toán Rời Rạc</span><br>(14:55-17:10)
-                        </td>
-                        <td>
-                            <span class="tag tag-code">Ra Quán Code</span><br>
-                            (Deep Focus)
-                        </td>
-                        <td>
-                            <span class="tag tag-code">Ra Quán Code</span><br>
-                            (Làm bài tập)
-                        </td>
-                        <td>
-                            <span class="tag tag-school">Vi Tích Phân 1</span><br>(12:40-16:10)
-                        </td>
-                        <td>
-                            <span class="tag tag-code">Code Project AI</span><br>
-                            <span class="tag tag-chill">Đi chơi / Cafe</span>
-                        </td>
+                        <td style="font-weight:bold; color:var(--dark);">Chiều<br><span style="font-size:0.8em; font-weight:normal">(12:30 - 17:30)</span></td>
+                        <td><span class="tag tag-code">Ra Quán Code (4h)</span><br><span class="tag tag-gym">Gym (16:30)</span></td>
+                        <td><span class="tag tag-school">Toán Rời Rạc</span><br>(12:40-16:10)</td>
+                        <td><span class="tag tag-school">Toán Rời Rạc</span><br>(14:55-17:10)</td>
+                        <td><span class="tag tag-code">Ra Quán Code</span><br>(Deep Focus)</td>
+                        <td><span class="tag tag-code">Ra Quán Code</span><br>(Làm bài tập)</td>
+                        <td><span class="tag tag-school">Vi Tích Phân 1</span><br>(12:40-16:10)</td>
+                        <td><span class="tag tag-code">Code Project AI</span><br><span class="tag tag-chill">Đi chơi / Cafe</span></td>
                     </tr>
                     <tr>
-                        <td style="font-weight:bold; color:var(--primary);">Tối<br><span style="font-size:0.8em; font-weight:normal">(18:00 - 23:00)</span></td>
-                        <td>
-                            <span class="tag tag-code">Học Tiếng Nhật</span><br>
-                            <span class="tag tag-chill">Game / Chill</span>
-                        </td>
-                        <td>
-                            <span class="tag tag-gym">Gym (Xả stress)</span><br>
-                            <span class="tag tag-code">Review bài</span>
-                        </td>
-                        <td>
-                            <span class="tag tag-gym">Gym (Leg day)</span><br>
-                            <span class="tag tag-code">Code dạo</span>
-                        </td>
-                        <td>
-                            <span class="tag tag-gym">Gym (Push day)</span><br>
-                            <span class="tag tag-code">Tiếng Nhật</span>
-                        </td>
-                        <td>
-                            <span class="tag tag-chill">Game Night</span><br>
-                            <span class="tag tag-chill">Doom-scrolling</span>
-                        </td>
-                        <td>
-                            <span class="tag tag-chill">Đi chơi với bạn</span><br>
-                            <span class="tag tag-chill">Ăn uống</span>
-                        </td>
-                        <td>
-                            <span class="tag tag-code">Chuẩn bị tuần mới</span><br>
-                            <span class="tag tag-chill">Ngủ sớm (Hope so)</span>
-                        </td>
+                        <td style="font-weight:bold; color:var(--dark);">Tối<br><span style="font-size:0.8em; font-weight:normal">(18:00 - 23:00)</span></td>
+                        <td><span class="tag tag-code">Học Tiếng Nhật</span><br><span class="tag tag-chill">Game / Chill</span></td>
+                        <td><span class="tag tag-gym">Gym (Xả stress)</span><br><span class="tag tag-code">Review bài</span></td>
+                        <td><span class="tag tag-gym">Gym (Leg day)</span><br><span class="tag tag-code">Code dạo</span></td>
+                        <td><span class="tag tag-gym">Gym (Push day)</span><br><span class="tag tag-code">Tiếng Nhật</span></td>
+                        <td><span class="tag tag-chill">Game Night</span><br><span class="tag tag-chill">Doom-scrolling</span></td>
+                        <td><span class="tag tag-chill">Đi chơi với bạn</span><br><span class="tag tag-chill">Ăn uống</span></td>
+                        <td><span class="tag tag-code">Chuẩn bị tuần mới</span><br><span class="tag tag-chill">Ngủ sớm (Hope so)</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -355,60 +432,39 @@
 
         <div class="card theme-gojo">
             <div class="card-img">
-                <img src="images/gojo.jpg" 
-                     onerror="this.src='images/gojo.png'; this.onerror=function(){this.src='https://wallpapers.com/images/hd/gojo-satoru-hollow-purple-technique-f07k8j6y9x6y9x6y.jpg'}" 
-                     alt="Gojo Satoru">
+                <img src="images/gojo.jpg" onerror="this.src='https://wallpapers.com/images/hd/gojo-satoru-hollow-purple-technique-f07k8j6y9x6y9x6y.jpg'" alt="Gojo">
             </div>
             <div class="card-content">
                 <div class="char-name">Gojo Satoru</div>
-                <div class="char-role">Chú Thuật Sư Mạnh Nhất - Jujutsu Kaisen</div>
+                <div class="char-role">Chú Thuật Sư Mạnh Nhất</div>
                 <div class="quote">
-                    "Yowai mo (Yếu quá nhỉ)... đó là điều tôi thường nói khi nhìn vào code của người khác. Nhưng với <strong>Đoàn Hoàng Việt</strong> thì khác. Thật thú vị! Lục Nhãn của tôi có thể phân tích mọi chú thuật sư, nhưng lại không thể nhìn thấy giới hạn trong tiềm năng phát triển của cậu nhóc này. Cấu trúc dữ liệu mà cậu ta xây dựng không chỉ vững chắc mà còn đẹp đẽ và hoàn hảo như một 'Vô Lượng Không Xứ' thực thụ, nơi mọi bug đều bị cô lập và triệt tiêu ngay lập tức. Tư duy logic của Việt vượt ra khỏi những quy chuẩn thông thường, một loại 'Vô Hạ Hạn' trong thế giới lập trình. Nếu có ai đó đủ tư cách để đứng cạnh tôi trên đỉnh cao của giới công nghệ trong tương lai, thì đó chỉ có thể là Việt. Cố gắng lên nhé, 'người mạnh nhất' tương lai!"
+                    "Yowai mo... Nhưng với <strong>Đoàn Hoàng Việt</strong> thì khác. Cấu trúc dữ liệu cậu ta xây dựng hoàn hảo như 'Vô Lượng Không Xứ'. Nếu có ai đủ tư cách đứng cạnh tôi, chỉ có thể là Việt."
                 </div>
             </div>
         </div>
 
         <div class="card theme-dio">
             <div class="card-img">
-                <img src="images/jojo.jpg" 
-                     onerror="this.src='images/jojo.png'; this.onerror=function(){this.src='https://static.jojowiki.com/images/thumb/4/4d/latest/20200813180230/Dio_PB_Infobox_Anime.png/270px-Dio_PB_Infobox_Anime.png'}"
-                     alt="DIO">
+                <img src="images/jojo.jpg" onerror="this.src='https://static.jojowiki.com/images/thumb/4/4d/latest/20200813180230/Dio_PB_Infobox_Anime.png/270px-Dio_PB_Infobox_Anime.png'" alt="DIO">
             </div>
             <div class="card-content">
                 <div class="char-name">DIO</div>
-                <div class="char-role">The World User - JoJo's Bizarre Adventure</div>
+                <div class="char-role">The World User</div>
                 <div class="quote">
-                    "KONO DIO DA!! Ta, DIO, kẻ đã vượt qua nhân tính và sống qua hàng thế kỷ, chưa từng thấy một phàm nhân nào thú vị như <strong>Đoàn Hoàng Việt</strong>! WRYYYYYYYYYY! Tốc độ deploy và tối ưu hóa website của hắn nhanh đến mức ngay cả khi ta dùng 'The World' để ngưng đọng thời gian, ta vẫn cảm thấy hắn đang di chuyển! Hắn thao túng các dòng lệnh C++ và JavaScript điêu luyện như thể đó là huyết mạch của chính mình. Ta có thể ngửi thấy mùi hương của sự hoàn hảo trong từng module hắn viết. Không nghi ngờ gì nữa, Việt chính là kẻ đứng trên đỉnh cao của chuỗi thức ăn trong thế giới lập trình viên! Hắn code không chỉ đúng, mà còn đầy phong cách, một thứ 'JoJo Pose' đầy nghệ thuật trong từng cú gõ phím! Thật đáng kinh ngạc! MUDA MUDA MUDA cho những kẻ dám đối đầu với hắn!"
+                    "KONO DIO DA!! Tốc độ deploy của hắn nhanh đến mức 'The World' cũng không theo kịp! Code đầy phong cách 'JoJo Pose'! MUDA MUDA cho ai dám đối đầu với hắn!"
                 </div>
             </div>
         </div>
 
         <div class="card theme-naruto">
             <div class="card-img">
-                <img src="images/naruto.jpg" 
-                     onerror="this.src='images/naruto.png'; this.onerror=function(){this.src='https://cdn.wallpapersafari.com/34/96/H7T40J.jpg'}"
-                     alt="Naruto">
+                <img src="images/naruto.jpg" onerror="this.src='https://cdn.wallpapersafari.com/34/96/H7T40J.jpg'" alt="Naruto">
             </div>
             <div class="card-content">
                 <div class="char-name">Uzumaki Naruto</div>
-                <div class="char-role">Hokage Đệ Thất - Làng Lá</div>
+                <div class="char-role">Hokage Đệ Thất</div>
                 <div class="quote">
-                    "Dattebayo! Tớ đã gặp rất nhiều ninja tài năng, nhưng chưa từng thấy ai có 'Nhẫn Đạo' code kiên cường và rực lửa như <strong>Việt</strong>! Cậu ấy đối mặt với những error đỏ lòm giống như cách tớ đối mặt với kẻ thù mạnh, không bao giờ bỏ cuộc, không bao giờ đi ngược lại lời nói của mình! Chakra... à không, tư duy logic của cậu ấy dồi dào và mạnh mẽ như Vĩ Thú vậy. Mỗi dòng code cậu ấy viết ra đều chứa đựng ý chí của lửa, một khát khao mãnh liệt để tạo ra những sản phẩm tốt nhất giúp đỡ mọi người. Tớ tin chắc rằng, với tinh thần đó, Việt sẽ trở thành một 'Hokage' vĩ đại trong thế giới lập trình, một người lãnh đạo bảo vệ server và dẫn dắt cộng đồng công nghệ phát triển! Tin tớ đi, cậu ấy sẽ làm được!"
-                </div>
-            </div>
-        </div>
-
-        <div class="card theme-itachi">
-            <div class="card-img">
-                <img src="images/itachi.jpg" 
-                     onerror="this.src='images/itachi.png'; this.onerror=function(){this.src='https://wallpapers.com/images/high/itachi-uchiha-red-moon-q5q5q5q5q5q5q5q5.jpg'}"
-                     alt="Itachi">
-            </div>
-            <div class="card-content">
-                <div class="char-name">Uchiha Itachi</div>
-                <div class="char-role">Thiên Tài Gia Tộc Uchiha</div>
-                <div class="quote">
-                    "Ta đã quan sát rất nhiều người bằng đôi mắt Mangekyou Sharingan này, nhưng <strong>Đoàn Hoàng Việt</strong> là một trường hợp đặc biệt. Dù có dùng Tsukuyomi để tra tấn tinh thần hay Amaterasu để thiêu rụi mọi thứ, ta cũng không thể tìm ra một lỗ hổng bảo mật thực sự nào trong hệ thống mà em ấy xây dựng. Em ấy sở hữu một trí tuệ và tầm nhìn vượt xa tuổi tác của mình, giống như một thiên tài thực sự của gia tộc Uchiha. Cách em ấy sắp xếp kiến trúc phần mềm, tối ưu thuật toán, tất cả đều là nghệ thuật của sự tính toán và tầm nhìn xa. Việt không cần dùng ảo thuật để mê hoặc người dùng, chính trải nghiệm người dùng (UX/UI) tuyệt vời và hiệu năng hoàn hảo mà em ấy tạo ra đã là một loại 'ảo thuật vĩnh cửu' không thể phá giải rồi. Một tài năng hiếm có mà làng công nghệ cần phải trân trọng."
+                    "Dattebayo! Nhẫn đạo code của Việt rực lửa y như tớ vậy. Một Hokage công nghệ tương lai chắc chắn sẽ bảo vệ được Server Làng Lá!"
                 </div>
             </div>
         </div>
@@ -426,5 +482,47 @@
         <p style="margin-top: 40px; font-size: 0.9rem; opacity: 0.6;">© 2025 Made with <i class="fas fa-heart" style="color: var(--itachi);"></i> by Viet 25CTT6</p>
     </footer>
 
+    <script>
+        // 1. Hiệu ứng Sakura rơi
+        function createSakura() {
+            const sakura = document.createElement('div');
+            sakura.classList.add('sakura');
+            sakura.style.left = Math.random() * 100 + 'vw';
+            sakura.style.animationDuration = Math.random() * 3 + 2 + 's';
+            sakura.style.opacity = Math.random();
+            sakura.style.width = Math.random() * 10 + 10 + 'px';
+            sakura.style.height = sakura.style.width;
+            document.body.appendChild(sakura);
+            setTimeout(() => { sakura.remove(); }, 5000);
+        }
+        setInterval(createSakura, 300);
+
+        // 2. LOGIC BẬT TẮT TIẾNG VIDEO (THAY VÌ DÙNG AUDIO TAG)
+        const musicBtn = document.getElementById('musicToggle');
+        const bgVideo = document.getElementById('bg-video');
+        const musicIcon = document.getElementById('musicIcon');
+        const musicText = document.getElementById('musicText');
+
+        // Mặc định video đang muted (true)
+        musicBtn.addEventListener('click', () => {
+            if (bgVideo.muted) {
+                // Bật tiếng
+                bgVideo.muted = false;
+                musicIcon.classList.remove('fa-volume-mute');
+                musicIcon.classList.add('fa-compact-disc');
+                musicBtn.classList.add('playing');
+                musicText.innerText = "Now Playing: Middle of the Night";
+                document.body.classList.add('music-on'); // Thêm class để CSS biết (ví dụ làm rõ video hơn)
+            } else {
+                // Tắt tiếng
+                bgVideo.muted = true;
+                musicIcon.classList.remove('fa-compact-disc');
+                musicIcon.classList.add('fa-volume-mute');
+                musicBtn.classList.remove('playing');
+                musicText.innerText = "Bật Nhạc Nền (Unmute)";
+                document.body.classList.remove('music-on');
+            }
+        });
+    </script>
 </body>
 </html>
