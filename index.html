@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- GIỮ NGUYÊN CSS CỦA FILE GỐC --- */
         :root {
             --primary: #0056b3;
             --dark: #111;
@@ -18,9 +17,11 @@
             --dio: #f1c40f;
             --naruto: #e67e22;
             --itachi: #e74c3c;
+            --leaf-green: #2ecc71;
+            --chakra-blue: #3498db;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; scroll-behavior: smooth; }
         body { background-color: #f4f4f9; color: #333; overflow-x: hidden; }
 
         /* --- HEADER --- */
@@ -42,7 +43,7 @@
             min-height: 100vh;
             display: flex; align-items: center; justify-content: center;
             background: linear-gradient(135deg, #fff 0%, #dbeafe 100%);
-            padding: 140px 10% 60px; /* Tăng padding để chứa nội dung dài hơn */
+            padding: 140px 10% 60px;
             text-align: center;
             flex-direction: column;
         }
@@ -73,26 +74,60 @@
         }
         .contact-btn:hover { transform: translateY(-3px); background: var(--dark); }
 
-        /* --- REVIEWS SECTION --- */
-        .reviews { padding: 80px 10%; background: white; }
-        .section-title { text-align: center; font-size: 2.8rem; color: var(--dark); margin-bottom: 70px; font-weight: 900; text-transform: uppercase; }
+        /* --- NEW SECTION: NINJA INFO (Sở thích/Điểm mạnh) --- */
+        .ninja-info { padding: 80px 10%; background: #fff; }
+        .section-title { text-align: center; font-size: 2.8rem; color: var(--dark); margin-bottom: 60px; font-weight: 900; text-transform: uppercase; }
         .section-title span { color: var(--primary); display: block; font-size: 1.2rem; letter-spacing: 3px; margin-bottom: 10px; }
 
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .info-card {
+            background: #f8f9fa; border-radius: 20px; padding: 30px;
+            transition: 0.3s; border-top: 5px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .info-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .info-card h4 { font-size: 1.5rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .info-card ul { list-style: none; }
+        .info-card li { margin-bottom: 12px; position: relative; padding-left: 25px; line-height: 1.6; }
+        .info-card li::before { content: '✦'; color: var(--primary); position: absolute; left: 0; font-weight: bold; }
+
+        /* Card themes */
+        .card-hobby { border-color: var(--naruto); } .card-hobby h4 { color: var(--naruto); }
+        .card-strength { border-color: var(--leaf-green); } .card-strength h4 { color: var(--leaf-green); }
+        .card-weakness { border-color: var(--itachi); } .card-weakness h4 { color: var(--itachi); }
+        .card-dream { border-color: var(--dio); } .card-dream h4 { color: #d4ac0d; }
+
+        /* --- NEW SECTION: SCHEDULE (Lịch trình) --- */
+        .schedule-section { padding: 80px 5%; background: #f0f2f5; }
+        .schedule-container { overflow-x: auto; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 20px; }
+        
+        table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        th, td { padding: 15px; text-align: center; border-bottom: 1px solid #eee; }
+        th { background: var(--primary); color: white; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; }
+        td { font-size: 0.95rem; vertical-align: middle; }
+        
+        .tag { padding: 5px 10px; border-radius: 5px; font-weight: bold; font-size: 0.85rem; display: inline-block; margin: 2px; }
+        .tag-school { background: #ffeaa7; color: #d35400; border: 1px solid #ffd32a; }
+        .tag-gym { background: #ffcccc; color: #c0392b; border: 1px solid #e74c3c; }
+        .tag-code { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .tag-chill { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+
+        /* --- REVIEWS SECTION --- */
+        .reviews { padding: 80px 10%; background: white; }
+
         .card {
-            display: flex;
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-            margin-bottom: 60px;
-            overflow: hidden;
-            transition: transform 0.3s;
-            border-left: 10px solid #ddd;
+            display: flex; background: #fff; border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1); margin-bottom: 60px;
+            overflow: hidden; transition: transform 0.3s; border-left: 10px solid #ddd;
         }
         .card:hover { transform: translateY(-10px); }
-
         .card-img { width: 320px; min-width: 320px; position: relative; }
         .card-img img { width: 100%; height: 100%; object-fit: cover; }
-        
         .card-content { padding: 40px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
         .char-name { font-size: 2.4rem; font-weight: 900; margin-bottom: 5px; font-family: 'Noto Sans JP', sans-serif; }
         .char-role { font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7; margin-bottom: 25px; font-weight: bold; }
@@ -126,6 +161,7 @@
             .hero-avatar { width: 260px; height: 260px; }
             nav { display: none; }
             .quote { font-size: 1rem; padding: 20px; }
+            table { min-width: 600px; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -136,8 +172,9 @@
         <nav>
             <ul>
                 <li><a href="#">Trang chủ</a></li>
-                <li><a href="#reviews">Huyền Thoại Đánh Giá</a></li>
-                <li><a href="#contact">Liên hệ</a></li>
+                <li><a href="#about">Hồ Sơ Ninja</a></li>
+                <li><a href="#schedule">Lịch Tu Luyện</a></li>
+                <li><a href="#reviews">Đánh Giá</a></li>
             </ul>
         </nav>
     </header>
@@ -152,9 +189,165 @@
         <h3>Sinh viên 25CTT6 | Kỹ Sư Cầu Nối Tương Lai | <span>The Chosen One</span></h3>
         
         <p>
-            Xin chào, tôi là <strong>Đoàn Hoàng Việt</strong>, một lập trình viên đầy tham vọng đến từ lớp 25CTT6. Không chỉ đơn thuần là viết code, tôi coi việc xây dựng phần mềm là một nghệ thuật. Với tư duy thuật toán sắc bén được tôi luyện như đôi mắt <em>Sharingan</em> và tốc độ triển khai dự án nhanh hơn cả <em>Phi Lôi Thần Thuật</em> của Minato, tôi luôn sẵn sàng đối đầu với mọi thách thức công nghệ. Ước mơ của tôi là trở thành một <strong>Kỹ sư cầu nối (BrSE)</strong> xuất sắc, đặt chân đến Tokyo và tạo ra những sản phẩm vĩ đại kết nối hai nền văn hóa Việt - Nhật. Đối với tôi, mỗi dòng code là một bước tiến tới tương lai, và không có bug nào là không thể bị "phong ấn"!
+            Xin chào, tôi là <strong>Đoàn Hoàng Việt</strong>. Không chỉ đơn thuần là viết code, tôi coi việc xây dựng phần mềm là một nghệ thuật. Với tư duy thuật toán sắc bén được tôi luyện như đôi mắt <em>Sharingan</em> và tốc độ triển khai dự án nhanh hơn cả <em>Phi Lôi Thần Thuật</em> của Minato, tôi luôn sẵn sàng đối đầu với mọi thách thức công nghệ. Ước mơ của tôi là trở thành một <strong>Kỹ sư cầu nối (BrSE)</strong> xuất sắc, đặt chân đến Tokyo và tạo ra những sản phẩm vĩ đại kết nối hai nền văn hóa Việt - Nhật. Đối với tôi, mỗi dòng code là một bước tiến tới tương lai, và không có bug nào là không thể bị "phong ấn"!
         </p>
-        <a href="#reviews" class="contact-btn">Xem Đánh Giá Bá Đạo</a>
+        <a href="#about" class="contact-btn">Khám Phá Hồ Sơ Của Tôi</a>
+    </section>
+
+    <section id="about" class="ninja-info">
+        <div class="section-title"><span>Ninja Profile</span>Hồ Sơ Nhẫn Giả</div>
+        
+        <div class="info-grid">
+            <div class="info-card card-hobby">
+                <h4><i class="fas fa-scroll"></i> Sở Thích & Đam Mê</h4>
+                <ul>
+                    <li><strong>Game thủ hệ chiến:</strong> Leo rank không chỉ là giải trí, đó là rèn luyện phản xạ (và test độ bền bàn phím).</li>
+                    <li><strong>Thể thuật (Gym):</strong> 30-90p mỗi ngày để có sức khỏe gánh team và gánh deadline.</li>
+                    <li><strong>Vibe Coding:</strong> Dùng AI tạo ra những project "vô tri" nhưng vui vẻ để xả stress.</li>
+                    <li><strong>Nhật Ngữ:</strong> Đang cày cuốc để hiểu anime không cần Vietsub và chuẩn bị cho giấc mơ BrSE.</li>
+                    <li><strong>Hưởng thụ:</strong> Cà phê quán quen, du lịch và săn lùng món ngon cùng đồng đội.</li>
+                </ul>
+            </div>
+
+            <div class="info-card card-strength">
+                <h4><i class="fas fa-fire"></i> Huyết Kế Giới Hạn (Điểm mạnh)</h4>
+                <ul>
+                    <li><strong>Tinh thần Lửa (Will of Fire):</strong> Chủ động học hỏi, không ngại công nghệ mới (Docker, AI, Framework lạ...).</li>
+                    <li><strong>Sức mạnh Tình bạn (Teamwork):</strong> Biết cách phối hợp, gánh team khi cần và support khi đồng đội yếu máu.</li>
+                    <li><strong>Tư duy mở (Open Mind):</strong> Luôn đón nhận ý kiến mới, sai thì sửa (nhưng hiếm khi sai lắm, chắc thế).</li>
+                    <li><strong>Độ trâu bò:</strong> Có thể ngồi quán cà phê code 4-7 tiếng liên tục mà không cần hồi mana.</li>
+                </ul>
+            </div>
+
+            <div class="info-card card-weakness">
+                <h4><i class="fas fa-user-injured"></i> Phong Ấn Cần Phá (Điểm yếu)</h4>
+                <ul>
+                    <li><strong>Tranh luận (Talk-no-Jutsu):</strong> Skill "thông não" khi tranh cãi chưa max cấp, dễ bị cứng họng.</li>
+                    <li><strong>Áp lực đồng trang lứa (Genjutsu):</strong> Hay bị FOMO, sợ bị bỏ lại phía sau dẫn đến stress nhẹ.</li>
+                    <li><strong>Cú đêm (Night Owl):</strong> Thức khuya fix bug nhưng sáng dậy sớm đi học là một cực hình.</li>
+                    <li><strong>Doom-scrolling:</strong> Thỉnh thoảng lướt TikTok/Shorts quên lối về (đang cai nghiện).</li>
+                </ul>
+            </div>
+
+            <div class="info-card card-dream">
+                <h4><i class="fas fa-cloud"></i> Giấc Mơ Hokage (Dự định)</h4>
+                <ul>
+                    <li><strong>Nhiệm vụ cấp S:</strong> Remote Work với thu nhập $10K+/tháng (Đô la thần chưởng).</li>
+                    <li><strong>Đại bản doanh:</strong> Làm việc tại một công ty công nghệ Nhật Bản (BrSE chuyên nghiệp).</li>
+                    <li><strong>Cân bằng Chakra:</strong> Ngủ sớm hơn, sống healthy hơn để code tới năm 60 tuổi.</li>
+                    <li><strong>Mục tiêu ngắn hạn:</strong> Qua môn Vi tích phân & Toán rời rạc mà không tạch môn nào!</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="schedule" class="schedule-section">
+        <div class="section-title"><span>Weekly Mission</span>Lịch Trình Tu Luyện</div>
+        
+        <div class="schedule-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Thứ 2</th>
+                        <th>Thứ 3</th>
+                        <th>Thứ 4</th>
+                        <th>Thứ 5</th>
+                        <th>Thứ 6</th>
+                        <th>Thứ 7</th>
+                        <th>Chủ Nhật</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight:bold; color:var(--primary);">Sáng<br><span style="font-size:0.8em; font-weight:normal">(7:00 - 12:00)</span></td>
+                        <td>
+                            <span class="tag tag-chill">Ngủ nướng / Tự học</span>
+                        </td>
+                        <td>
+                            <span class="tag tag-school">Thể Dục (7:30)</span><br>
+                            <span class="tag tag-school">Workshop (8:00)</span>
+                        </td>
+                        <td>
+                            <span class="tag tag-school">Vi Tích Phân 1</span><br>(9:45-11:50)
+                        </td>
+                        <td>
+                            <span class="tag tag-school">Nhập môn CNTT</span><br>(7:30-11:00)
+                        </td>
+                        <td>
+                            <span class="tag tag-school">CS Lập Trình</span><br>(7:30-8:45)<br>
+                            <span class="tag tag-school">NM CNTT</span>
+                        </td>
+                        <td>
+                            <span class="tag tag-school">CS Lập Trình</span><br>(7:30-11:00)
+                        </td>
+                        <td>
+                            <span class="tag tag-gym">Gym (Sáng sớm)</span><br>
+                            <span class="tag tag-code">Vibe Coding</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold; color:var(--primary);">Chiều<br><span style="font-size:0.8em; font-weight:normal">(12:30 - 17:30)</span></td>
+                        <td>
+                            <span class="tag tag-code">Ra Quán Code (4h)</span><br>
+                            <span class="tag tag-gym">Gym (16:30)</span>
+                        </td>
+                        <td>
+                            <span class="tag tag-school">Toán Rời Rạc</span><br>(12:40-16:10)
+                        </td>
+                        <td>
+                            <span class="tag tag-school">Toán Rời Rạc</span><br>(14:55-17:10)
+                        </td>
+                        <td>
+                            <span class="tag tag-code">Ra Quán Code</span><br>
+                            (Deep Focus)
+                        </td>
+                        <td>
+                            <span class="tag tag-code">Ra Quán Code</span><br>
+                            (Làm bài tập)
+                        </td>
+                        <td>
+                            <span class="tag tag-school">Vi Tích Phân 1</span><br>(12:40-16:10)
+                        </td>
+                        <td>
+                            <span class="tag tag-code">Code Project AI</span><br>
+                            <span class="tag tag-chill">Đi chơi / Cafe</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold; color:var(--primary);">Tối<br><span style="font-size:0.8em; font-weight:normal">(18:00 - 23:00)</span></td>
+                        <td>
+                            <span class="tag tag-code">Học Tiếng Nhật</span><br>
+                            <span class="tag tag-chill">Game / Chill</span>
+                        </td>
+                        <td>
+                            <span class="tag tag-gym">Gym (Xả stress)</span><br>
+                            <span class="tag tag-code">Review bài</span>
+                        </td>
+                        <td>
+                            <span class="tag tag-gym">Gym (Leg day)</span><br>
+                            <span class="tag tag-code">Code dạo</span>
+                        </td>
+                        <td>
+                            <span class="tag tag-gym">Gym (Push day)</span><br>
+                            <span class="tag tag-code">Tiếng Nhật</span>
+                        </td>
+                        <td>
+                            <span class="tag tag-chill">Game Night</span><br>
+                            <span class="tag tag-chill">Doom-scrolling</span>
+                        </td>
+                        <td>
+                            <span class="tag tag-chill">Đi chơi với bạn</span><br>
+                            <span class="tag tag-chill">Ăn uống</span>
+                        </td>
+                        <td>
+                            <span class="tag tag-code">Chuẩn bị tuần mới</span><br>
+                            <span class="tag tag-chill">Ngủ sớm (Hope so)</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
     <section id="reviews" class="reviews">
